@@ -1,69 +1,62 @@
-import { useReducer } from 'react';
+import { useState } from 'react';
 import './App.css';
 
-function UserForm(){
-  const [state, dispatch] = useReducer((state, action) =>({
-      ...state,
-      ...action,
-    }),
+function NameList(){
+  const[list, setList] = useState(["Jack", "Jill", "John"]);
+  const [name, setName] = useState(""); 
 
-  {
-    first:"",
-    last:"",
-});
+   function nameChange(){
+     setList([...list, name]);
+     setName('');
+     console.log(list,name);
+   };
+
   return(
     <div>
+      <ul>
+        {list.map((name)=>(
+          <li key={name}>{name}</li>
+        ))}
+      </ul>
       <input
       type="text"
-      value={state.first}
-      onChange={(e)=> dispatch({first: e.target.value})}
+      value={name}
+      onChange={(e) => setName(e.target.value)}
       />
-      <input
-      type="text"
-      value={state.last}
-      onChange={(e)=> dispatch({last: e.target.value})}
-      />
-      <div>
-        First: {state.first}
-      </div>
-      <div>
-          Last: {state.last}
-      </div>
+      <button
+      onClick={nameChange}>
+        Add Name
+      </button> 
     </div>
-  );
+  )
 }
 
-function NameList() {
-  const[ state, dispatch ] = useReducer((state, action)=>{
-    switch(action.type){
-      case "SET_NAME":
-        return { ...state, name:action.payload};
-      case "ADD_NAME":
-        return {...state, names: [...state.names, state.name ], name:""};
-    }
-  },
-  {
-    names: [],
-    name:"",
-    
-  })
-  return(
+function Counter() {
+  const[count, setCount] = useState(10);
+
+  function addOne(){
+    setCount(count + 1);
+  }
+
+  function subtractOne(){
+    setCount(count - 1);
+  }
+
+  return (
     <div>
-      <div>
-        {state.names.map((name, index)=>(
-          <div>{name}</div>
-        ))}
-      </div>
-      <input 
-      type='text'
-      value={state.name}
-      onChange={(e) => dispatch({type:"SET_NAME", payload: e.target.value})}/>
-      <div>
+      <header>
         <button
-        onClick={() => dispatch({type:"ADD_NAME", payload:state.name})}>
-          Add Name
+        onClick={addOne}>
+          Add
         </button>
-      </div>
+        <button
+        onClick={subtractOne}>
+          Subtract
+        </button>
+        <h1>
+          {count}
+        </h1>
+      </header>
     </div>
   );
 }
@@ -71,7 +64,7 @@ function NameList() {
 function App() {
   return(
     <div>
-      <UserForm />
+      <Counter />
       <NameList />
     </div>
   );
