@@ -8,7 +8,6 @@ function NameList(){
    function nameChange(){
      setList([...list, name]);
      setName('');
-     console.log(list,name);
    };
 
   return(
