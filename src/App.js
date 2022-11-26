@@ -8,7 +8,7 @@ import './App.css';
     [numbers]
     );
 
-    const [names] = useState(["John","Paul","George","Ringo"]);
+    const [names] = useState(["John","Paul","George","Ringo", "Tim"]);
 
     const sortNames = [...names].sort();
 
